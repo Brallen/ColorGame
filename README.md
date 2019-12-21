@@ -10,3 +10,7 @@ https://www.createjs.com/
 ## Webhosting & CI/CD pipeline
 
 TBD
+
+## Design
+![alt text](./images/Design.png "Design")
+![alt text](./images/Colors.png "Colors")
