@@ -16,5 +16,4 @@ https://parceljs.org/
 https://travis-ci.com/
 
 ## Design
-![alt text](./images/Design.png "Design")
-![alt text](./images/Colors.png "Colors")
+Design can be found over in the [wiki.](https://github.com/Brallen/ColorGame/wiki/Design)
