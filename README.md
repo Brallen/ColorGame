@@ -17,3 +17,31 @@ https://travis-ci.com/
 
 ## Design
 Design can be found over in the [wiki.](https://github.com/Brallen/ColorGame/wiki/Design)
+
+## How The Game is Played
+
+### Setup
+The game board consists of a 2d square board which is cut up into tetris shaped pieces. Every piece starts as white and one piece is randomly selected for the player to start on.
+Next to the game board is the color queue. The queue shows the player the next 3 colors that will be played over the player's next 3 turns.
+
+### Playing The Game
+The player starts each turn by selecting an adjacent tile to move to. Upon landing on the tile it will change color to the color at the top of the color queue. It will then check if it is part of a "set" of pieces. A set is 3 or more pieces of the same color.
+Should the player's move complete a set of tiles, this will turn all tiles in the set black and combine the tiles into one black super tile. Once a player leaves a black tile, they may not return to it. The game is over when all tiles have been turned black.
+
+### Points
+Giving their player feedback on how well they are doing is difficult due to the following observations:
+
+- For any single board configuration it is difficult/impossible to determine the lowest amount of moves it can be solved in
+- Randomness factors such as colors in the queue and player starting position change the difficulty every play through.
+- One Game configuration can only be meaningfully compared to itself
+
+The following are possible metrics to compare performance for a given configuration:
+
+- Time elapsed since the start of play (incentivizes quick thinking over deliberate strategy. Attractive to exeperienced players looking for a challenge, intimidating to new/casual players)
+- How many moves were used to win (incentivizes slow deliberate play. Similar scoring system to golf, every move is one less move the player wants to make)
+- How many piece sets were completed (fun for experienced players looking for a challenge to use more than 3 pieces per set to minimize total sets completed)
+
+Due to the nature of the game as a strategic mind game in similar veins to sudoku or chess, it may be adviseable to remove randomness factors. Rather, while randomness factors are used to generate a level, once generated a configuration is named and replayable, including the entire color queue, the starting position, and the actual pieces on the board. An AI program could learn to play the game, and using the above metrics rate the difficulty of a level and set per metrics level that a player can compare their own performance against. This has benefits to intellectual players as they can analyze a board, some may even want to build tools that help them solve it easier. This also increases the social value of the game, as players can compare their score to other players for the same "map", an impossible feature while randomness persists.
+
+
+
