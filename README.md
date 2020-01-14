@@ -43,5 +43,23 @@ The following are possible metrics to compare performance for a given configurat
 
 Due to the nature of the game as a strategic mind game in similar veins to sudoku or chess, it may be adviseable to remove randomness factors. Rather, while randomness factors are used to generate a level, once generated a configuration is named and replayable, including the entire color queue, the starting position, and the actual pieces on the board. An AI program could learn to play the game, and using the above metrics rate the difficulty of a level and set per metrics level that a player can compare their own performance against. This has benefits to intellectual players as they can analyze a board, some may even want to build tools that help them solve it easier. This also increases the social value of the game, as players can compare their score to other players for the same "map", an impossible feature while randomness persists.
 
+## Generating the "grid"
 
+### Voronoi Diagram
+Given a random set of points in a plane; A Voronoi Diagram is a partition of a plane into regions (cells) which are defined by the closest point to them.
 
+ - Wikipedia: [https://en.wikipedia.org/wiki/Voronoi_diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
+ - Interactive Example: [http://alexbeutel.com/webgl/voronoi.html](http://alexbeutel.com/webgl/voronoi.html)
+
+### The d3-delaunay Library
+We will use the [d3-delaunay](https://github.com/d3/d3-delaunay) library to store and perform computations on the set of data points used to define our Voronoi diagram. Some useful actions available to us through this library include:
+ 
+ - Rendering a Voronoi diagram to a provided context
+ - Random generation of Voronoi diagram data
+ - Cell computation and boundary definitions
+ - Locate which cell a point is within
+ - Find all adjacent cells (Using [this solution](https://observablehq.com/@fil/unconnected-delaunay-neighbors) for artificially bounded Voronoi Diagrams)
+
+Since the data is represented in Euclidean space and related data structures, we can render in the Voronoi diagram whilst using the d3 library capabilities to implement interactivity with the diagram.
+
+By randomly computing a set of points and generating a Voronoi diagram from them, we are able to create an immense variety of unique playing fields for our players to explore and solve.
