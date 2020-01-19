@@ -1,0 +1,22 @@
+body {
+    background-color: #49484D;
+}
+
+header {
+    background-color: #363539;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+header h1 {
+    font-family: "Bungee", sans-serif;
+    font-size: 3.250em;
+    color: #FFFFFF;
+    padding: 15px 0 15px 25px;
+}
+
+canvas {
+    display: block;
+    margin: auto;
+    margin-top: 40px;
+    background-color: #80D3B9;
+}
