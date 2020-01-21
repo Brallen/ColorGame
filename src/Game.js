@@ -1,8 +1,26 @@
-    class Game {
+import { getVoronoiData } from './voronoi';
+import RNGUtil from './RNGUtil';
+import ColorShape from './ColorShape';
 
-    constructor() {
-        this.stage = new createjs.Stage("demoCanvas");
-        
+export default class Game {
+    constructor(count, width, height) {
+        this.stage = new createjs.Stage("board");
+        RNGUtil.setRNGBySeed('test');
+        this.initBoard(count, width, height);
+    }
+
+    initBoard(count, width, height) {
+        this.updateCanvas(width, height);
+        this.board = getVoronoiData(count, width, height);
+        this.board.forEach((item) => {
+            this.addShape('white', item.cell, item.neighbors);
+        });
+    }
+
+    updateCanvas(width, height) {
+        const canvas = document.getElementById('board');
+        canvas.width = width;
+        canvas.height = height;
     }
 
     addShape(color, vertices, neighbors) {
