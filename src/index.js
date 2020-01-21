@@ -1,18 +1,5 @@
-var game = new Game();
-game.addShape("DeepSkyBlue", [
-  [0, 0],
-  [100, 100],
-  [100, 0],
-  [0, 0],
-], null);
+import Game from './Game';
 
-game.addShape("Green", [
-  [0, 0],
-  [0, 100],
-  [100, 100],
-  [0, 0]
-], null);
+var game = new Game(25, 1000, 1000);
 
 game.render();
-
-// window.onload = game.render();
