@@ -1,4 +1,4 @@
-import RNGUtil from './RNGUtil';
+import RNGUtil from './util/RNGUtil';
 
 export default class ColorQueue {
     constructor() {

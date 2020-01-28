@@ -1,5 +1,5 @@
 import { Delaunay } from 'd3-delaunay';
-import RNGUtil from './RNGUtil';
+import RNGUtil from './util/RNGUtil';
 
 function generatePoints(count, width, height) {
   const points = [];
@@ -30,7 +30,6 @@ export function getVoronoiData(count, width, height) {
 
   const cellPolygons = [];
   for (let i = 0; i < count; i++) {
-    console.log('Cell: ', points[i], 'neighbors: ', trueNeighbors(voronoi, points, i));
     cellPolygons.push({
       cell: voronoi.cellPolygon(i),
       neighbors: trueNeighbors(voronoi, points, i)
