@@ -1,0 +1,99 @@
+body {
+    background-color: #49484D;
+}
+
+header {
+    background-color: #363539;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+header h1 {
+    font-family: "Bungee", sans-serif;
+    font-size: 3.250em;
+    color: #FFFFFF;
+    padding: 15px 0 15px 25px;
+}
+
+p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 2.188em;
+}
+
+h3 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 2.813em;
+}
+
+.game-container {
+    background-color: #80D3B9;
+    margin: auto;
+    margin-top: 40px;
+    width: 1055px;
+    height: 800px; 
+    display: grid;
+    grid-template-columns: 40px 720px 40px 215px 40px;
+    grid-template-rows: 40px 360px 40px 320px 40px;
+    grid-template-areas: 
+        ". . . . ."
+        ". game . color ."
+        ". game . . ."
+        ". game . score ."
+        ". . . . .";
+}
+
+canvas {
+    grid-area: game;
+    background-color: #FFFFFF;
+    border: 5px solid #434343;
+}
+
+.color-container {
+    grid-area: color;
+    background-color: #FFFFFF;
+    border: 5px solid #434343;
+}
+
+.color-container p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.color-container .color-next{
+    width: 75px;
+    height: 75px;
+    margin: 15px auto;
+}
+
+/* This wil be dynamic for the game hardcoding for now for an example */
+.color-container #first {
+    background-color: #6E7DCE;
+}
+
+.color-container #second {
+    background-color: #F27E77;
+}
+
+.color-container #third {
+    background-color: #84E0A0;
+}
+/* End static colors */
+
+.score-container {
+    grid-area: score;
+    background-color: #FFFFFF;
+    border: 5px solid #434343;
+}
+
+.score-container p, .score-container h3 {
+    text-align: center;
+}
+
+.score-container .player-score-text {
+    margin: 35px 0 20px 0;
+}
+
+.score-container .high-score-text {
+    margin: 40px 0 20px 0;
+}
