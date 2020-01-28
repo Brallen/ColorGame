@@ -1,3 +1,5 @@
+import Game from './Game';
+
 function init() {
     var stage = new createjs.Stage("demoCanvas");
 
@@ -8,4 +10,6 @@ function init() {
     stage.update();
   }
 
-window.onload = init;
+var game = new Game(25, 1000, 1000);
+
+game.render();
