@@ -8,20 +8,20 @@
       <link href="https://fonts.googleapis.com/css?family=Bungee|Roboto:400,700&display=swap" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="src/reset.css">
       <link rel="stylesheet" type="text/css" href="src/index.css">
-      <script src="src/index.js"></script>
     </head>
     <body>
       <header>
         <h1>Color Game</h1>
       </header>
       <main class="game-container">
-        <canvas id="demoCanvas" width="710" height="710"></canvas>
-        <div class="color-container">
+        <canvas id="board"></canvas>
+        <canvas id="color-queue"></canvas>
+        <!-- <div class="color-container">
           <p>Next</p>
           <div id="first" class="color-next"></div>
           <div id="second" class="color-next"></div>
           <div id="third" class="color-next"></div>
-        </div>
+        </div> -->
         <div class="score-container">
           <p class="player-score-text">Score</p>
           <h3 class="player-score">999999</h3>
@@ -29,6 +29,7 @@
           <h3 class="high-score">999999</h3>
         </div>
       </main>
+      <script type="module" src="src/index.js"></script>
     </body>
 </html>
   
