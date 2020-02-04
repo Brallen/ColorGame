@@ -1,5 +1,5 @@
 import { Delaunay } from 'd3-delaunay';
-import RNGUtil from './RNGUtil';
+import RNGUtil from './util/RNGUtil';
 
 function generatePoints(count, width, height) {
   const points = [];

@@ -2,19 +2,44 @@ export default class ColorShape extends createjs.Shape {
     constructor(color, vertices, neighbors) {
         super();
         this.neighbors = neighbors;
-        this.drawSelf(color, vertices);
+        this.vertices = vertices;
+        this.color = color;
+        this.drawSelf(color);
     }
 
-    drawSelf(color, vertices) {
-        this.graphics.beginStroke('black');
-        this.graphics.beginFill(color);
-        this.graphics.moveTo(vertices[0][0], vertices[0][1]);
-        for (let i = 1; i < vertices.length; i++) {
-            let vertice = vertices[i];
-            this.graphics.lineTo(vertice[0], vertice[1]);
+    // Check to see if any neighbor coordinates fit within the given shape
+    isNeighbor(shape) {
+        for(const neighbor of this.neighbors) {
+            if (shape.hitTest(neighbor[0], neighbor[1])) {
+                return true;
+            }
         }
-        this.graphics.closePath();
-        this.graphics.endFill();
+
+        return false;
+    }
+
+    // Permanently change the color
+    changeColor(color) {
+        this.drawSelf(color);
+        this.color = color;
+    }
+
+    resetColor() {
+        this.drawSelf(this.color);
+    }
+
+    drawSelf(color) {
+        const { graphics, vertices } = this;
+        graphics.clear();
+        graphics.beginStroke('black');
+        graphics.beginFill(color);
+        graphics.moveTo(vertices[0][0], vertices[0][1]);
+        for (let i = 1; i < vertices.length; i++) {
+            const vertex = vertices[i];
+            graphics.lineTo(vertex[0], vertex[1]);
+        }
+        graphics.endFill();
+        graphics.closePath();
     }
        
 }
