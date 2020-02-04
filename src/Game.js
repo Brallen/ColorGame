@@ -61,7 +61,7 @@ export default class Game {
     moveEvent(newShape) {
         newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
         
-        nextColor = RNGUtil.randColor(1.0);
+        this.nextColor = RNGUtil.randColor(1.0);
         this.currentShape = newShape;
 
         this.render();
