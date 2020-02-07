@@ -3,29 +3,31 @@ import RNGUtil from './util/RNGUtil';
 import ColorShape from './ColorShape';
 import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
+import QueueDisplay from './QueueDisplay';
 
 export default class Game {
     constructor(count, width, height) {
         RNGUtil.setRNGBySeed('test');
+        this.colorQueue = new ColorQueue();
+        this.colorQueue.fillQueue();
 
         this.stage = new createjs.Stage('board');
         this.stage.enableMouseOver();
         this.generateBoard(count, width, height);
 
+        this.queueContainer = new createjs.Stage('color-queue');
+        this.initQueueContainer(205, 360);
+
         // Player position tracking
         this.currentShape = this.stage.getChildAt(Math.round(RNGUtil.randInRange(0, count - 1)));
-        this.currentShape.changeColor(RNGUtil.randCSSColor(1.0));
+        this.currentShape.changeColor(ColorUtil.rgbaToCSSRgba(this.colorQueue.getNextColor()));
 
-        // Temporary random color stored as [r, g, b, a]
-        // TODO: Replace assignment with color queue pop
-        this.nextColor = RNGUtil.randColor(1.0);
+        //set the next color to be next in queue
+        this.nextColor = this.colorQueue.getNextColor();
 
         this.stage.addEventListener('click', this.onClick.bind(this));
         this.stage.addEventListener('mouseover', this.onMouseOver.bind(this));
         this.stage.addEventListener('mouseout', this.onMouseOut.bind(this));
-
-        this.colorQueue = new createjs.Stage('color-queue');
-        this.initColorQueue(205, 360);
     }
 
     validShape(shape) {
@@ -59,10 +61,12 @@ export default class Game {
     }
 
     moveEvent(newShape) {
-        newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
+        newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
         
-        this.nextColor = RNGUtil.randColor(1.0);
+        this.nextColor = this.colorQueue.getNextColor();
         this.currentShape = newShape;
+
+
 
         this.render();
     }
@@ -75,7 +79,7 @@ export default class Game {
         });
     }
 
-    initColorQueue(width, height) {
+    initQueueContainer(width, height) {
         this.updateCanvas('color-queue', width, height);
     }
 
@@ -92,5 +96,6 @@ export default class Game {
 
     render() {
         this.stage.update();
+        this.queueContainer.update();
     }
 }
