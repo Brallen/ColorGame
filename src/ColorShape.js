@@ -1,9 +1,12 @@
+const DEFAULT_THICKNESS = 4;
+
 export default class ColorShape extends createjs.Shape {
     constructor(color, vertices, neighbors) {
         super();
         this.neighbors = neighbors;
         this.vertices = vertices;
         this.color = color;
+        this.thickness = DEFAULT_THICKNESS;
         this.drawSelf(color);
     }
 
@@ -19,18 +22,19 @@ export default class ColorShape extends createjs.Shape {
     }
 
     // Permanently change the color
-    changeColor(color) {
-        this.drawSelf(color);
+    setColor(color) {
         this.color = color;
     }
 
-    resetColor() {
-        this.drawSelf(this.color);
+    // Permanently change the stroke thickness
+    setStrokeThickness(thickness = DEFAULT_THICKNESS) {
+        this.thickness = thickness;
     }
 
-    drawSelf(color) {
+    drawSelf(color = this.color, thickness = this.thickness) {
         const { graphics, vertices } = this;
         graphics.clear();
+        graphics.setStrokeStyle(thickness);
         graphics.beginStroke('black');
         graphics.beginFill(color);
         graphics.moveTo(vertices[0][0], vertices[0][1]);
