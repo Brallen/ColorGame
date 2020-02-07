@@ -24,6 +24,7 @@ export default class Game {
 
         //set the next color to be next in queue
         this.nextColor = this.colorQueue.getNextColor();
+        this.updateQueueContainer();
 
         this.stage.addEventListener('click', this.onClick.bind(this));
         this.stage.addEventListener('mouseover', this.onMouseOver.bind(this));
@@ -62,11 +63,11 @@ export default class Game {
 
     moveEvent(newShape) {
         newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
-        
+
         this.nextColor = this.colorQueue.getNextColor();
         this.currentShape = newShape;
 
-
+        this.updateQueueContainer();
 
         this.render();
     }
@@ -81,6 +82,13 @@ export default class Game {
 
     initQueueContainer(width, height) {
         this.updateCanvas('color-queue', width, height);
+    }
+
+    updateQueueContainer() {
+        const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 40);
+        const second = QueueDisplay.createSquare(this.colorQueue.getQueue()[0], 60, 145);
+        const third = QueueDisplay.createSquare(this.colorQueue.getQueue()[1], 60, 250);
+        this.queueContainer.addChild(first, second, third);
     }
 
     updateCanvas(stage, width, height) {
