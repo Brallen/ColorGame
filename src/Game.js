@@ -17,8 +17,8 @@ export default class Game {
 
         // Player position tracking
         this.currentShape = this.stage.getChildAt(Math.round(RNGUtil.randInRange(0, count - 1)));
-        this.currentShape.changeStrokeThickness(CURRENT_SHAPE_THICKNESS);
-        this.currentShape.changeColor(RNGUtil.randCSSColor(1.0));
+        this.currentShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
+        this.currentShape.setColor(RNGUtil.randCSSColor(1.0));
         this.currentShape.drawSelf();
 
         // Temporary random color stored as [r, g, b, a]
@@ -45,7 +45,7 @@ export default class Game {
 
         const { nextColor } = this;
 
-        target.changeStrokeThickness(SELECT_THICKNESS);
+        target.setStrokeThickness(SELECT_THICKNESS);
         target.drawSelf(ColorUtil.rgbaToCSSRgba(nextColor[0], nextColor[1], nextColor[2], 0.5));
         this.render();
     }
@@ -54,7 +54,7 @@ export default class Game {
     onMouseOut({ target }) {
         if (!this.validShape(target)) return;
 
-        target.changeStrokeThickness()
+        target.setStrokeThickness()
         target.drawSelf();
         this.render();
     }
@@ -66,11 +66,11 @@ export default class Game {
     }
 
     moveEvent(newShape) {
-        newShape.changeStrokeThickness(CURRENT_SHAPE_THICKNESS);
-        newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
+        newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
+        newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
         newShape.drawSelf();
 
-        this.currentShape.changeStrokeThickness();
+        this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
         this.nextColor = RNGUtil.randColor(1.0);
