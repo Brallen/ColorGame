@@ -4,6 +4,9 @@ import ColorShape from './ColorShape';
 import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
 
+const SELECT_THICKNESS = 6;
+const CURRENT_THICKNESS = 8;
+
 export default class Game {
     constructor(count, width, height) {
         RNGUtil.setRNGBySeed('test');
@@ -14,7 +17,9 @@ export default class Game {
 
         // Player position tracking
         this.currentShape = this.stage.getChildAt(Math.round(RNGUtil.randInRange(0, count - 1)));
+        this.currentShape.changeStrokeThickness(CURRENT_THICKNESS);
         this.currentShape.changeColor(RNGUtil.randCSSColor(1.0));
+        this.currentShape.drawSelf();
 
         // Temporary random color stored as [r, g, b, a]
         // TODO: Replace assignment with color queue pop
@@ -40,6 +45,7 @@ export default class Game {
 
         const { nextColor } = this;
 
+        target.changeStrokeThickness(SELECT_THICKNESS);
         target.drawSelf(ColorUtil.rgbaToCSSRgba(nextColor[0], nextColor[1], nextColor[2], 0.5));
         this.render();
     }
@@ -48,7 +54,8 @@ export default class Game {
     onMouseOut({ target }) {
         if (!this.validShape(target)) return;
 
-        target.resetColor();
+        target.changeStrokeThickness()
+        target.drawSelf();
         this.render();
     }
 
@@ -59,7 +66,12 @@ export default class Game {
     }
 
     moveEvent(newShape) {
+        newShape.changeStrokeThickness(CURRENT_THICKNESS);
         newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
+        newShape.drawSelf();
+
+        this.currentShape.changeStrokeThickness();
+        this.currentShape.drawSelf();
         
         this.nextColor = RNGUtil.randColor(1.0);
         this.currentShape = newShape;
