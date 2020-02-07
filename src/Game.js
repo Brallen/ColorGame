@@ -5,7 +5,7 @@ import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
 
 const SELECT_THICKNESS = 6;
-const CURRENT_THICKNESS = 8;
+const CURRENT_SHAPE_THICKNESS = 8;
 
 export default class Game {
     constructor(count, width, height) {
@@ -17,7 +17,7 @@ export default class Game {
 
         // Player position tracking
         this.currentShape = this.stage.getChildAt(Math.round(RNGUtil.randInRange(0, count - 1)));
-        this.currentShape.changeStrokeThickness(CURRENT_THICKNESS);
+        this.currentShape.changeStrokeThickness(CURRENT_SHAPE_THICKNESS);
         this.currentShape.changeColor(RNGUtil.randCSSColor(1.0));
         this.currentShape.drawSelf();
 
@@ -66,7 +66,7 @@ export default class Game {
     }
 
     moveEvent(newShape) {
-        newShape.changeStrokeThickness(CURRENT_THICKNESS);
+        newShape.changeStrokeThickness(CURRENT_SHAPE_THICKNESS);
         newShape.changeColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
         newShape.drawSelf();
 
