@@ -20,7 +20,8 @@
   "homepage": "https://Brallen.github.io/ColorGame",
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
-    "parcel-plugin-clean-dist": "0.0.6"
+    "parcel-plugin-clean-dist": "0.0.6",
+    "prettier": "1.19.1"
   },
   "dependencies": {
     "d3-delaunay": "^5.2.0",
