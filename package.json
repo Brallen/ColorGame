@@ -1,30 +1,37 @@
 {
-  "name": "colorgame",
-  "version": "0.0.1",
-  "description": "A game about matching colors",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --public-url ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Brallen/ColorGame.git"
-  },
-  "author": "Noah Berks @Manason, Brett Case @Brallen, Alex Jones @jonesjonathan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Brallen/ColorGame/issues"
-  },
-  "homepage": "https://Brallen.github.io/ColorGame",
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-clean-dist": "0.0.6",
-    "prettier": "1.19.1"
-  },
-  "dependencies": {
-    "d3-delaunay": "^5.2.0",
-    "seedrandom": "^3.0.5"
-  }
+	"name": "colorgame",
+	"version": "0.0.1",
+	"description": "A game about matching colors",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "parcel index.html",
+		"build": "parcel build index.html --public-url ./",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Brallen/ColorGame.git"
+	},
+	"author": "Noah Berks @Manason, Brett Case @Brallen, Alex Jones @jonesjonathan",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Brallen/ColorGame/issues"
+	},
+	"homepage": "https://Brallen.github.io/ColorGame",
+	"devDependencies": {
+		"husky": "^4.2.1",
+		"parcel-bundler": "^1.12.4",
+		"parcel-plugin-clean-dist": "0.0.6",
+		"prettier": "1.19.1",
+		"pretty-quick": "^2.0.1"
+	},
+	"dependencies": {
+		"d3-delaunay": "^5.2.0",
+		"seedrandom": "^3.0.5"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	}
 }
