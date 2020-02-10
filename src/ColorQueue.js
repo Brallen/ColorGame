@@ -8,7 +8,7 @@ export default class ColorQueue {
     }
 
     fillQueue() {
-        for(let i = 0; i < 4; i++) {
+        for(let i = 0; i < 3; i++) {
             this.addColorToQueue();
         }
     }

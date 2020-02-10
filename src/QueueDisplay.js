@@ -1,5 +1,3 @@
-import ColorUtil from './util/ColorUtil';
-
 export default class QueueDisplay {
 
     static createSquare(color, x, y) {

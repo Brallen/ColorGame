@@ -82,12 +82,16 @@ export default class Game {
 
     initQueueContainer(width, height) {
         this.updateCanvas('color-queue', width, height);
+        const text = new createjs.Text("Next", "32px Roboto", "#000000");
+        text.x = 70;
+        text.y = 15;
+        this.queueContainer.addChild(text);
     }
 
     updateQueueContainer() {
-        const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 40);
-        const second = QueueDisplay.createSquare(this.colorQueue.getQueue()[0], 60, 145);
-        const third = QueueDisplay.createSquare(this.colorQueue.getQueue()[1], 60, 250);
+        const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 60);
+        const second = QueueDisplay.createSquare(this.colorQueue.getQueue()[0], 60, 160);
+        const third = QueueDisplay.createSquare(this.colorQueue.getQueue()[1], 60, 260);
         this.queueContainer.addChild(first, second, third);
     }
 
