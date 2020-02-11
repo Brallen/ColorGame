@@ -10,15 +10,15 @@ export default class ColorUtil {
     return `rgba(${r},${g},${b},${a})`;
   }
   
-  static hexToRgb(hex) {
+  static hexToRgba(hex) {
     return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
                       ,(m, r, g, b) => '#' + r + r + g + g + b + b)
       .substring(1).match(/.{2}/g)
-      .map(x => parseInt(x, 16));
+      .map(x => parseInt(x, 16)).concat([1]);
   }
   
   static hexToCSSRgba(hex, a = 1.0) {
-    const rgb = hexToRgb(hex);
-    return rgbaToCSSRgba(rgb[0], rgb[1], rgb[2], a);
+    const rgb = ColorUtil.hexToRgba(hex);
+    return ColorUtil.rgbaToCSSRgba(rgb[0], rgb[1], rgb[2], a);
   }
 }
