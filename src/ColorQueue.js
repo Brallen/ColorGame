@@ -3,7 +3,12 @@ import ColorUtil from './util/ColorUtil';
 
 export default class ColorQueue {
     constructor() {
-        this.colors = ['#6E7DCE', '#F27E77', '#84E0A0', '#F2E796'];
+        this.colors = [
+            [110, 125, 206, 1], // #6E7DCE
+            [242, 126, 119, 1], // #F27E77
+            [132, 224, 160, 1], // #84E0A0
+            [242, 231, 150, 1]  //#F2E796
+        ];
         this.queue = [];
     }
 
@@ -23,6 +28,6 @@ export default class ColorQueue {
 
     getNextColor() {
         this.addColorToQueue();
-        return ColorUtil.hexToRgba(this.queue.shift());
+        return this.queue.shift();
     }
 }
