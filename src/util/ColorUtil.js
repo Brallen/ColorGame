@@ -18,7 +18,7 @@ export default class ColorUtil {
   }
   
   static hexToCSSRgba(hex, a = 1.0) {
-    const rgb = ColorUtil.hexToRgb(hex);
+    const rgb = ColorUtil.hexToRgba(hex);
     return ColorUtil.rgbaToCSSRgba(rgb[0], rgb[1], rgb[2], a);
   }
 }
