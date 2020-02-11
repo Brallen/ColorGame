@@ -103,9 +103,11 @@ export default class Game {
     }
 
     updateQueueContainer() {
+        this.queueContainer.removeAllChildren();
+        const colors = this.colorQueue.getQueue();
         const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 60);
-        const second = QueueDisplay.createSquare(this.colorQueue.getQueue()[0], 60, 160);
-        const third = QueueDisplay.createSquare(this.colorQueue.getQueue()[1], 60, 260);
+        const second = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[0]), 60, 160);
+        const third = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[1]), 60, 260);
         this.queueContainer.addChild(first, second, third);
     }
 
