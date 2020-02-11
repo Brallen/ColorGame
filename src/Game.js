@@ -3,6 +3,7 @@ import RNGUtil from './util/RNGUtil';
 import ColorShape from './ColorShape';
 import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
+import MergingUtil from './util/MergingUtil';
 
 const SELECT_THICKNESS = 6;
 const CURRENT_SHAPE_THICKNESS = 8;
@@ -66,15 +67,26 @@ export default class Game {
     }
 
     moveEvent(newShape) {
-        newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
-        newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
-        newShape.drawSelf();
+        let mergedShape = MergingUtil.mergeShapes(newShape, this.currentShape);
 
-        this.currentShape.setStrokeThickness();
-        this.currentShape.drawSelf();
+        // newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
+        // newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
+        // newShape.drawSelf();
+
+        // this.currentShape.setStrokeThickness();
+        // this.currentShape.drawSelf();
         
-        this.nextColor = RNGUtil.randColor(1.0);
-        this.currentShape = newShape;
+        // this.nextColor = RNGUtil.randColor(1.0);
+        // this.currentShape = newShape;
+        
+        
+        this.stage.addChild(mergedShape);
+        console.log(this.stage.removeChild(this.currentShape));
+        console.log(this.stage.removeChild(newShape));
+        console.log(this.stage.children.length);
+        console.log(this.stage.children);
+        this.currentShape = mergedShape;
+        mergedShape.drawSelf();
 
         this.render();
     }
@@ -97,8 +109,8 @@ export default class Game {
         canvas.height = height;
     }
 
-    addShape(color, vertices, neighbors) {
-        const shape = new ColorShape(color, vertices, neighbors);
+    addShape(color, vertices, neighbors, seed) {
+        const shape = new ColorShape(color, vertices, neighbors, seed);
         this.stage.addChild(shape);
     }
 
