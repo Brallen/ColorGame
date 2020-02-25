@@ -68,16 +68,51 @@ export default class Game {
         }
     }
 
+    getMatches(shape) {
+        const matchedShapes = new Map();
+        this.match(shape, shape.color, matchedShapes);
+
+        return matchedShapes;
+    }
+
+    findMatches(shape, color, matches) {
+        // If current shape does not match color or is a visited shape, exit
+        if (shape.color !== color || matches.get(shape.id) !== undefined ) { return; }
+
+        matches.set(shape.id, shape);
+        // Check shape's neighbors
+        shape.neighbors.forEach((neighbor) => {
+            const adjacentShape = this.stage.getObjectUnderPoint(neighbor[0], neighbor[1]);
+            if (adjacentShape !== undefined) {
+                this.findMatches(adjacentShape, color, matches);
+            }
+        })
+    }
+
+    // TODO: Replace with Noah's combo function
+    fillMatches(matches) {
+        const shapes = [...matches.values()]
+        if (shapes.length >= 3) {
+            shapes.forEach((match) => {
+                match.setColor('black');
+                match.drawSelf();
+            });
+        }
+    }
+
     moveEvent(newShape) {
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
 
         newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
-        newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor))
+        newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
         newShape.drawSelf();
         
         this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
+        // TODO: Replace with Noah's combo function
+        this.fillMatches(this.getMatches(newShape));
+
         this.nextColor = this.colorQueue.getNextColor();
         this.currentShape = newShape;
 
