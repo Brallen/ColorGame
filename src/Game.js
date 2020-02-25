@@ -70,7 +70,7 @@ export default class Game {
 
     getMatches(shape) {
         const matchedShapes = new Map();
-        this.match(shape, shape.color, matchedShapes);
+        this.findMatches(shape, shape.color, matchedShapes);
 
         return matchedShapes;
     }
