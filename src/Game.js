@@ -75,16 +75,16 @@ export default class Game {
         return matchedShapes;
     }
 
-    match(shape, color, memo) {
+    findMatches(shape, color, matches) {
         // If current shape does not match color or is a visited shape, exit
-        if (shape.color !== color || memo.get(shape.id) !== undefined ) { return; }
+        if (shape.color !== color || matches.get(shape.id) !== undefined ) { return; }
 
-        memo.set(shape.id, shape);
+        matches.set(shape.id, shape);
         // Check shape's neighbors
         shape.neighbors.forEach((neighbor) => {
             const adjacentShape = this.stage.getObjectUnderPoint(neighbor[0], neighbor[1]);
             if (adjacentShape !== undefined) {
-                this.match(adjacentShape, color, memo);
+                this.findMatches(adjacentShape, color, matches);
             }
         })
     }
