@@ -105,11 +105,8 @@ export default class Game {
     }
 
     moveEvent(newShape) {
-<<<<<<< HEAD
         
-=======
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
->>>>>>> master
 
         newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
@@ -123,8 +120,14 @@ export default class Game {
 
         this.nextColor = this.colorQueue.getNextColor();
         this.currentShape = newShape;
-<<<<<<< HEAD
         
+      
+
+        this.updateQueueContainer();
+
+        this.render();
+
+
         // TEST CODE FOR MERGING SHAPES
         // let mergedShape = MergingUtil.mergeShapes(newShape, this.currentShape);
         // this.stage.addChild(mergedShape);
@@ -136,12 +139,6 @@ export default class Game {
         // mergedShape.drawSelf();
 
         // this.render();
-=======
-
-        this.updateQueueContainer();
-
-        this.render();
->>>>>>> master
     }
 
     generateBoard(count, width, height) {
