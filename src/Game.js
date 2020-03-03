@@ -138,7 +138,9 @@ export default class Game {
     }
 
     updateQueueContainer() {
-        this.queueContainer.removeAllChildren();
+        for(let i = 1; i <= this.queueContainer.length; i++) { //text at pos 0 so remove everything after
+            this.queueContainer.removeChildAt(1);
+        }
         const colors = this.colorQueue.getQueue();
         const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 60);
         const second = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[0]), 60, 160);
