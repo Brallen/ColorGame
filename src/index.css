@@ -55,31 +55,6 @@ canvas {
     border: 5px solid #434343;
 }
 
-/* .color-container p {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.color-container .color-next{
-    width: 75px;
-    height: 75px;
-    margin: 15px auto;
-}
-
-/* This wil be dynamic for the game hardcoding for now for an example
-.color-container #first {
-    background-color: #6E7DCE;
-}
-
-.color-container #second {
-    background-color: #F27E77;
-}
-
-.color-container #third {
-    background-color: #84E0A0;
-}
-End static colors */
-
 .score-container {
     grid-area: score;
     background-color: #FFFFFF;
