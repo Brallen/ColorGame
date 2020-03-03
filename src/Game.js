@@ -3,11 +3,8 @@ import RNGUtil from './util/RNGUtil';
 import ColorShape from './ColorShape';
 import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
-<<<<<<< HEAD
 import MergingUtil from './util/MergingUtil';
-=======
 import QueueDisplay from './QueueDisplay';
->>>>>>> master
 
 const SELECT_THICKNESS = 6;
 const CURRENT_SHAPE_THICKNESS = 8;
