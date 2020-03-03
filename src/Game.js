@@ -138,7 +138,7 @@ export default class Game {
     }
 
     updateQueueContainer() {
-        for(let i = 1; i < 4; i++) { //text at pos 0 so remove everything after
+        for(let i = 1; i <= this.queueContainer.length; i++) { //text at pos 0 so remove everything after
             this.queueContainer.removeChildAt(1);
         }
         const colors = this.colorQueue.getQueue();
