@@ -6,9 +6,13 @@ export default class MergingUtil {
         let shape1V = shape1.vertices;
         let shape2V = shape2.vertices;
 
-        let shape1Map = this.markSharedVertices(shape1V);
-        let shape2Map = this.markSharedVertices(shape2V);
+        // remove the last element of each array as this will be the duplicate of the first vertex. Makes it easier to merge
+        shape1V.splice(shape1V.length - 1, 1);
+        shape2V.splice(shape2V.length - 1, 1);
 
+        let shape1Map = this.markSharedVertices(shape1V, shape2V);
+        let shape2Map = this.markSharedVertices(shape2V, shape1V);
+     
         shape1V = this.removeInteriorVertices(shape1V, shape1Map);
         shape2V = this.removeInteriorVertices(shape2V, shape2Map);
 
@@ -17,22 +21,42 @@ export default class MergingUtil {
         let shape1Neighbors = shape1.neighbors;
         let shape2Neighbors = shape2.neighbors;
         let mergedNeighbors = shape1Neighbors.concat(shape2Neighbors.filter((neighbor) => shape1Neighbors.indexOf(neighbor) < 0));
-        mergedNeighbors = mergedNeighbors.splice(mergedNeighbors.indexOf(shape2.seed), 1);
+    
+        mergedNeighbors.splice(mergedNeighbors.indexOf(shape2.seed), 1);
+        mergedNeighbors.splice(mergedNeighbors.indexOf(shape1.seed), 1);
         let mergedShape = new ColorShape("black", mergedVertices, mergedNeighbors, shape1.seed);
-
+        
         return mergedShape;
     }
 
-    static markSharedVertices(shapeVertices) {
+    static markSharedVertices(shape1Vertices, shape2Vertices) {
         let sharedVertexMap = new Map();
-        for(const vertex in shapeVertices) {
-            if (shapeVertices.includes(vertex)) {
+        for(const vertex of shape1Vertices) {
+            if (this.isVertexIn(shape2Vertices, vertex)) {
                 sharedVertexMap.set(vertex, true);
             } else {
                 sharedVertexMap.set(vertex, false);
             }
         }
         return sharedVertexMap;
+    }
+
+    static isVertexIn(array, vertex) {
+        for(let v of array) {
+            if(vertex[0] == v[0] && vertex[1] == v[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static indexOfVertex(array, vertex) {
+        for(let i = 0; i < array.length; i++) {
+            if (array[i][0] == vertex[0] && array[i][1] == vertex[1]) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     static removeInteriorVertices(shapeVertices, shapeMap) {
@@ -63,45 +87,43 @@ export default class MergingUtil {
         let shape1Index = 0;
         let shape2Index = 0;
         let shapeSelected = 1;
-        
+
         while(true) {
            if (shapeSelected == 1) {
                let vertex = shape1Vertices[shape1Index];
-               /*if (!mergedVertices.includes(vertex)) {
-                   mergedVertices.push(vertex);
-               }*/
+              
                mergedVertices.push(vertex);
 
                if (shape1Map.get(vertex)) {
                    shapeSelected = 2;
-                   shape2Index = shape2Vertices.indexOf(vertex);
+                   shape2Index = this.indexOfVertex(shape2Vertices, vertex) + 1;
+                   if (shape2Index == shape2Vertices.length) {
+                        shape2Index = 0;
+                   }
                } else {
                    shape1Index++;
-                   if (shape1Index == shape1Vertices.length) {
-                      break;
+                   if (shape1Index >= shape1Vertices.length) {
+                        return mergedVertices;
                    }
                }
            } else {
                let vertex = shape2Vertices[shape2Index];
-            //    if (!mergedVertices.includes(vertex)) {
-            //        mergedVertices.push(vertex);
-            //    }
-                mergedVertices.push(vertex);
+               mergedVertices.push(vertex);
 
                if (shape2Map.get(vertex)) {
-                   shapeSelected = 2;
-                   shape1Index = shape1Vertices.indexOf(vertex);
-                   if (shape1Index == 0) {
-                       break;
+                   shapeSelected = 1;
+                   shape1Index = this.indexOfVertex(shape1Vertices, vertex) + 1;
+                   
+                   if (shape1Index == 0 || shape1Index >= shape1Vertices.length) {
+                       return mergedVertices;
                    }
                } else {
                    shape2Index++;
-                   if (shape2Index == shape2Vertices.length) {
+                   if (shape2Index >= shape2Vertices.length) {
                        shape2Index = 0;
                    }
                }
            } 
        }
-       return mergedVertices;
     }
 }
