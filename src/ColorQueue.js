@@ -30,4 +30,8 @@ export default class ColorQueue {
         this.addColorToQueue();
         return this.queue.shift();
     }
+
+    static moveShapeVertically(shape, diff) {
+        if(shape) shape.y += diff;
+    }
 }

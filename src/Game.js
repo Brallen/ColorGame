@@ -10,6 +10,7 @@ const CURRENT_SHAPE_THICKNESS = 8;
 
 export default class Game {
     constructor(count, width, height) {
+        createjs.Ticker.framerate = 40;
         RNGUtil.setRNGBySeed('test');
         this.colorQueue = new ColorQueue();
         this.colorQueue.fillQueue();
@@ -138,14 +139,24 @@ export default class Game {
     }
 
     updateQueueContainer() {
-        for(let i = 1; i <= this.queueContainer.length; i++) { //text at pos 0 so remove everything after
+        console.log('called', this.queueContainer);
+        //animate them to new location
+        for (let j = 0; j < 10; j++) {
+            ColorQueue.moveShapeVertically(this.queueContainer.getChildAt(2), -10); //cover first shape
+            ColorQueue.moveShapeVertically(this.queueContainer.getChildAt(3), -10); //uncover second shape
+            this.queueContainer.update();
+        }
+
+        for(let i = 1; i <= this.queueContainer.children.length; i++) { //text at pos 0 so remove everything after
             this.queueContainer.removeChildAt(1);
         }
+
         const colors = this.colorQueue.getQueue();
         const first = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(this.nextColor), 60, 60);
         const second = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[0]), 60, 160);
         const third = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[1]), 60, 260);
-        this.queueContainer.addChild(first, second, third);
+        const last = QueueDisplay.createSquare(ColorUtil.rgbaToCSSRgba(colors[2]), 60, 260); //hidden under until animation
+        this.queueContainer.addChild(first, second, third, last);
     }
 
     updateCanvas(stage, width, height) {
