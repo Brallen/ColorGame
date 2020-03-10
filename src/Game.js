@@ -90,14 +90,17 @@ export default class Game {
         })
     }
 
-    // TODO: Replace with Noah's combo function
     fillMatches(matches) {
         const shapes = [...matches.values()]
         if (shapes.length >= 3) {
-            shapes.forEach((match) => {
-                match.setColor('black');
-                match.drawSelf();
-            });
+            let mergedShape = shapes[0];
+            for(let i = 1; i < shapes.length; i++) {
+                mergedShape = MergingUtil.mergeShapes(mergedShape, shapes[i]);
+                this.stage.removeChild(shapes[i]);
+            }
+            this.stage.removeChild(shapes[0]);
+            this.stage.addChild(mergedShape);
+            mergedShape.drawSelf();
         }
     }
 
@@ -112,30 +115,16 @@ export default class Game {
         this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
-        // TODO: Replace with Noah's combo function
         this.fillMatches(this.getMatches(newShape));
+
 
         this.nextColor = this.colorQueue.getNextColor();
         this.currentShape = newShape;
         
-      
-
         this.updateQueueContainer();
 
         this.render();
 
-
-        // TEST CODE FOR MERGING SHAPES
-        // let mergedShape = MergingUtil.mergeShapes(newShape, this.currentShape);
-        // this.stage.addChild(mergedShape);
-        // console.log(this.stage.removeChild(this.currentShape));
-        // console.log(this.stage.removeChild(newShape));
-        // console.log(this.stage.children.length);
-        // console.log(this.stage.children);
-        // this.currentShape = mergedShape;
-        // mergedShape.drawSelf();
-
-        // this.render();
     }
 
     generateBoard(count, width, height) {

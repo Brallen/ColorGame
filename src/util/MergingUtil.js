@@ -87,9 +87,18 @@ export default class MergingUtil {
         let shape1Index = 0;
         let shape2Index = 0;
         let shapeSelected = 1;
+        let start = true;
 
         while(true) {
-           if (shapeSelected == 1) {
+            if (shapeSelected == 1) {
+                if (start) {
+                    start = false;
+                } else {
+                    if (shape1Index == 0) {
+                        mergedVertices.push(shape1Vertices[0]);
+                        return mergedVertices;
+                    }
+                }
                let vertex = shape1Vertices[shape1Index];
               
                mergedVertices.push(vertex);
@@ -97,13 +106,13 @@ export default class MergingUtil {
                if (shape1Map.get(vertex)) {
                    shapeSelected = 2;
                    shape2Index = this.indexOfVertex(shape2Vertices, vertex) + 1;
-                   if (shape2Index == shape2Vertices.length) {
+                   if (shape2Index >= shape2Vertices.length) {
                         shape2Index = 0;
                    }
                } else {
                    shape1Index++;
                    if (shape1Index >= shape1Vertices.length) {
-                        return mergedVertices;
+                        shape1Index = 0;
                    }
                }
            } else {
@@ -114,8 +123,8 @@ export default class MergingUtil {
                    shapeSelected = 1;
                    shape1Index = this.indexOfVertex(shape1Vertices, vertex) + 1;
                    
-                   if (shape1Index == 0 || shape1Index >= shape1Vertices.length) {
-                       return mergedVertices;
+                   if (shape1Index >= shape1Vertices.length) {
+                        shape1Index = 0;
                    }
                } else {
                    shape2Index++;
