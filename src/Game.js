@@ -36,12 +36,23 @@ export default class Game {
         this.stage.addEventListener('mouseout', this.onMouseOut.bind(this));
 
         this.numMoves = 0;
+
+        this.validMoves = new Map();
+        this.updateValidMoves();
     }
 
     validShape(shape) {
-        return (
-            (shape.id !== this.currentShape.id) &&
-            this.currentShape.isNeighbor(shape));
+        return this.validMoves.has(shape.id);
+    }
+
+    updateValidMoves() {
+        this.validMoves.clear();
+        this.currentShape.neighbors.forEach(vertex => {
+            const shape = this.stage.getObjectUnderPoint(vertex[0], vertex[1]);
+            if (shape !== undefined && shape.color !== 'black') {
+                this.validMoves.set(shape.id, shape);
+            }
+        });
     }
 
     // Fired whenever the mouse enters a shape
@@ -125,6 +136,8 @@ export default class Game {
         this.render();
 
         // TODO: Are there any more valid moves left? Execute game over and update highscore
+        this.updateValidMoves();
+        this.checkEndCondition();
     }
 
     generateBoard(count, width, height) {
@@ -172,8 +185,18 @@ export default class Game {
 
     updateHighscore() {
         const highscore = localStorage.getItem('highscore');
-        if (highscore === null || this.numMoves < parseInt(highscore)) {
-            localStorage.setItem('highscore', toString(this.numMoves));
+        if (isNaN(highscore) || this.numMoves < parseInt(highscore)) {
+            localStorage.setItem('highscore', this.numMoves);
         }
+    }
+
+    checkEndCondition() {
+        // TODO: There needs to be at least three reachable shapes left!
+        if (this.validMoves.size !== 0) {
+            return;
+        }
+
+        this.updateHighscore();
+        // TODO: Do something to "end" the game
     }
 }
