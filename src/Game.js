@@ -34,6 +34,8 @@ export default class Game {
         this.stage.addEventListener('click', this.onClick.bind(this));
         this.stage.addEventListener('mouseover', this.onMouseOver.bind(this));
         this.stage.addEventListener('mouseout', this.onMouseOut.bind(this));
+
+        this.numMoves = 0;
     }
 
     validShape(shape) {
@@ -101,6 +103,8 @@ export default class Game {
     }
 
     moveEvent(newShape) {
+        this.numMoves++;
+
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
 
         newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
@@ -119,6 +123,8 @@ export default class Game {
         this.updateQueueContainer();
 
         this.render();
+
+        // TODO: Are there any more valid moves left? Execute game over and update highscore
     }
 
     generateBoard(count, width, height) {
@@ -162,5 +168,12 @@ export default class Game {
     render() {
         this.stage.update();
         this.queueContainer.update();
+    }
+
+    updateHighscore() {
+        const highscore = localStorage.getItem('highscore');
+        if (highscore === null || this.numMoves < parseInt(highscore)) {
+            localStorage.setItem('highscore', toString(this.numMoves));
+        }
     }
 }
