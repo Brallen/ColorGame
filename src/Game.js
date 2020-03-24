@@ -92,16 +92,18 @@ export default class Game {
 
     fillMatches(matches) {
         const shapes = [...matches.values()]
+        let mergedShape = null;
         if (shapes.length >= 3) {
-            let mergedShape = shapes[0];
+            mergedShape = shapes[0];
             for(let i = 1; i < shapes.length; i++) {
                 mergedShape = MergingUtil.mergeShapes(mergedShape, shapes[i]);
                 this.stage.removeChild(shapes[i]);
             }
             this.stage.removeChild(shapes[0]);
             this.stage.addChild(mergedShape);
-            mergedShape.drawSelf();
+           
         }
+        return mergedShape;
     }
 
     moveEvent(newShape) {
@@ -115,11 +117,14 @@ export default class Game {
         this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
-        this.fillMatches(this.getMatches(newShape));
-
+        const mergedShape = this.fillMatches(this.getMatches(newShape));
+        if (mergedShape !== null) {
+            this.currentShape = mergedShape;
+        } else {
+            this.currentShape = newShape;
+        }
 
         this.nextColor = this.colorQueue.getNextColor();
-        this.currentShape = newShape;
         
         this.updateQueueContainer();
 
