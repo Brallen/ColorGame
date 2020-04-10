@@ -15,7 +15,6 @@ export default class MergingUtil {
      
         shape1V = this.removeInteriorVertices(shape1V, shape1Map);
         shape2V = this.removeInteriorVertices(shape2V, shape2Map);
-
         let mergedVertices = this.mergeVertices(shape1V, shape2V, shape1Map, shape2Map);
 
         const shape1Neighbors = shape1.neighbors;
@@ -75,7 +74,7 @@ export default class MergingUtil {
             let afterIsShared = shapeMap.get(shapeVertices[afterIndex]);
  
             if (beforeIsShared && afterIsShared) {
-                shapeVertices = shapeVertices.splice(i, 1);
+                shapeVertices.splice(i, 1);
                 i--;
             }
         }
