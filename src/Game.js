@@ -100,14 +100,13 @@ export default class Game {
                 this.stage.removeChild(shapes[i]);
             }
             this.stage.removeChild(shapes[0]);
-            this.stage.addChild(mergedShape);
            
         }
         return mergedShape;
     }
 
     moveEvent(newShape) {
-        
+
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
 
         newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
@@ -117,18 +116,22 @@ export default class Game {
         this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
-        const mergedShape = this.fillMatches(this.getMatches(newShape));
+        let mergedShape = this.fillMatches(this.getMatches(newShape));
         if (mergedShape !== null) {
+            this.stage.addChild(mergedShape);
             this.currentShape = mergedShape;
         } else {
             this.currentShape = newShape;
         }
+
 
         this.nextColor = this.colorQueue.getNextColor();
         
         this.updateQueueContainer();
 
         this.render();
+        console.log(this.stage.numChildren);
+        console.log(this.stage.getObjectUnderPoint(1, 499));
 
     }
 

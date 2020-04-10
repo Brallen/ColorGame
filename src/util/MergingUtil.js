@@ -3,8 +3,8 @@ import ColorShape from "../ColorShape";
 export default class MergingUtil {
 
     static mergeShapes(shape1, shape2) {
-        let shape1V = shape1.vertices;
-        let shape2V = shape2.vertices;
+        let shape1V = [...shape1.vertices];
+        let shape2V = [...shape2.vertices];
 
         // remove the last element of each array as this will be the duplicate of the first vertex. Makes it easier to merge
         shape1V.splice(shape1V.length - 1, 1);
@@ -18,8 +18,8 @@ export default class MergingUtil {
 
         let mergedVertices = this.mergeVertices(shape1V, shape2V, shape1Map, shape2Map);
 
-        let shape1Neighbors = shape1.neighbors;
-        let shape2Neighbors = shape2.neighbors;
+        const shape1Neighbors = shape1.neighbors;
+        const shape2Neighbors = shape2.neighbors;
         let mergedNeighbors = shape1Neighbors.concat(shape2Neighbors.filter((neighbor) => shape1Neighbors.indexOf(neighbor) < 0));
     
         mergedNeighbors.splice(mergedNeighbors.indexOf(shape2.seed), 1);
@@ -89,7 +89,9 @@ export default class MergingUtil {
         let shapeSelected = 1;
         let start = true;
 
-        while(true) {
+        const bounded = shape1Vertices.length + shape2Vertices.length;
+
+        for(let i = 0; i < bounded; i++) {
             if (shapeSelected == 1) {
                 if (start) {
                     start = false;
@@ -134,5 +136,6 @@ export default class MergingUtil {
                }
            } 
        }
+       throw new Error("Infinite Loop during merging shapes");
     }
 }
