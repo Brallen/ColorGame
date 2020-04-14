@@ -1,9 +1,10 @@
 const DEFAULT_THICKNESS = 4;
 
 export default class ColorShape extends createjs.Shape {
-    constructor(color, vertices, neighbors) {
+    constructor(color, vertices, neighbors, seed) {
         super();
         this.neighbors = neighbors;
+        this.seed = seed;
         this.vertices = vertices;
         this.color = color;
         this.thickness = DEFAULT_THICKNESS;
