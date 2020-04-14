@@ -96,11 +96,10 @@ export default class Game {
         if (shapes.length >= 3) {
             mergedShape = shapes[0];
             for(let i = 1; i < shapes.length; i++) {
-                mergedShape = MergingUtil.mergeShapes(mergedShape, shapes[i]);
-                this.stage.removeChild(shapes[i]);
+                mergedShape.neighbors = MergingUtil.mergeNeighbors(mergedShape, shapes[i]);
+                // this.stage.removeChild(shapes[i]);
             }
-            this.stage.removeChild(shapes[0]);
-           
+            // this.stage.removeChild(shapes[0]);
         }
         return mergedShape;
     }

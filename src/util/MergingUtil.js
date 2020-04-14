@@ -2,20 +2,20 @@ import ColorShape from "../ColorShape";
 
 export default class MergingUtil {
 
-    static mergeShapes(shape1, shape2) {
-        let shape1V = [...shape1.vertices];
-        let shape2V = [...shape2.vertices];
+    static mergeNeighbors(shape1, shape2) {
+        // let shape1V = [...shape1.vertices];
+        // let shape2V = [...shape2.vertices];
 
-        // remove the last element of each array as this will be the duplicate of the first vertex. Makes it easier to merge
-        shape1V.splice(shape1V.length - 1, 1);
-        shape2V.splice(shape2V.length - 1, 1);
+        // // remove the last element of each array as this will be the duplicate of the first vertex. Makes it easier to merge
+        // shape1V.splice(shape1V.length - 1, 1);
+        // shape2V.splice(shape2V.length - 1, 1);
 
-        let shape1Map = this.markSharedVertices(shape1V, shape2V);
-        let shape2Map = this.markSharedVertices(shape2V, shape1V);
+        // // let shape1Map = this.markSharedVertices(shape1V, shape2V);
+        // // let shape2Map = this.markSharedVertices(shape2V, shape1V);
      
-        shape1V = this.removeInteriorVertices(shape1V, shape1Map);
-        shape2V = this.removeInteriorVertices(shape2V, shape2Map);
-        let mergedVertices = this.mergeVertices(shape1V, shape2V, shape1Map, shape2Map);
+        // shape1V = this.removeInteriorVertices(shape1V, shape1Map);
+        // shape2V = this.removeInteriorVertices(shape2V, shape2Map);
+        // let mergedVertices = this.mergeVertices(shape1V, shape2V, shape1Map, shape2Map);
 
         const shape1Neighbors = shape1.neighbors;
         const shape2Neighbors = shape2.neighbors;
@@ -23,9 +23,9 @@ export default class MergingUtil {
     
         mergedNeighbors.splice(mergedNeighbors.indexOf(shape2.seed), 1);
         mergedNeighbors.splice(mergedNeighbors.indexOf(shape1.seed), 1);
-        let mergedShape = new ColorShape("black", mergedVertices, mergedNeighbors, shape1.seed);
+        // let mergedShape = new ColorShape("black", mergedVertices, mergedNeighbors, shape1.seed);
         
-        return mergedShape;
+        return mergedNeighbors;
     }
 
     static markSharedVertices(shape1Vertices, shape2Vertices) {
