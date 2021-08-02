@@ -27,14 +27,13 @@ export function getVoronoiData(count, width, height) {
   const points = generatePoints(count, width, height);
   const delaunay = Delaunay.from(points);
   const voronoi = delaunay.voronoi([0, 0, width, height]);
-
   const cellPolygons = [];
   for (let i = 0; i < count; i++) {
     cellPolygons.push({
       cell: voronoi.cellPolygon(i),
-      neighbors: trueNeighbors(voronoi, points, i)
+      neighbors: trueNeighbors(voronoi, points, i),
+      seed: points[i]
     });
   }
-
   return cellPolygons;
 }

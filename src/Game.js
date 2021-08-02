@@ -3,6 +3,7 @@ import RNGUtil from './util/RNGUtil';
 import ColorShape from './ColorShape';
 import ColorUtil from './util/ColorUtil';
 import ColorQueue from './ColorQueue';
+import MergingUtil from './util/MergingUtil';
 import QueueDisplay from './QueueDisplay';
 
 const SELECT_THICKNESS = 6;
@@ -89,18 +90,22 @@ export default class Game {
         })
     }
 
-    // TODO: Replace with Noah's combo function
     fillMatches(matches) {
         const shapes = [...matches.values()]
+        let mergedShape = null;
         if (shapes.length >= 3) {
-            shapes.forEach((match) => {
-                match.setColor('black');
-                match.drawSelf();
-            });
+            mergedShape = shapes[0];
+            for(let i = 1; i < shapes.length; i++) {
+                mergedShape.neighbors = MergingUtil.mergeNeighbors(mergedShape, shapes[i]);
+                // this.stage.removeChild(shapes[i]);
+            }
+            // this.stage.removeChild(shapes[0]);
         }
+        return mergedShape;
     }
 
     moveEvent(newShape) {
+
         newShape.setColor(ColorUtil.rgbaToCSSRgba(this.nextColor));
 
         newShape.setStrokeThickness(CURRENT_SHAPE_THICKNESS);
@@ -110,22 +115,30 @@ export default class Game {
         this.currentShape.setStrokeThickness();
         this.currentShape.drawSelf();
         
-        // TODO: Replace with Noah's combo function
-        this.fillMatches(this.getMatches(newShape));
+        let mergedShape = this.fillMatches(this.getMatches(newShape));
+        if (mergedShape !== null) {
+            this.stage.addChild(mergedShape);
+            this.currentShape = mergedShape;
+        } else {
+            this.currentShape = newShape;
+        }
+
 
         this.nextColor = this.colorQueue.getNextColor();
-        this.currentShape = newShape;
-
+        
         this.updateQueueContainer();
 
         this.render();
+        console.log(this.stage.numChildren);
+        console.log(this.stage.getObjectUnderPoint(1, 499));
+
     }
 
     generateBoard(count, width, height) {
         this.updateCanvas('board', width, height);
         const data = getVoronoiData(count, width, height);
         data.forEach((item) => {
-            this.addShape('white', item.cell, item.neighbors);
+            this.addShape('white', item.cell, item.neighbors, item.seed);
         });
     }
 
@@ -154,8 +167,8 @@ export default class Game {
         canvas.height = height;
     }
 
-    addShape(color, vertices, neighbors) {
-        const shape = new ColorShape(color, vertices, neighbors);
+    addShape(color, vertices, neighbors, seed) {
+        const shape = new ColorShape(color, vertices, neighbors, seed);
         this.stage.addChild(shape);
     }
 
