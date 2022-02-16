@@ -1,5 +1,8 @@
 # Color Game
 
+## NEW LOCATION
+Work on this project here has stopped. However work is being continued in a new repository [here!](https://github.com/banio-co/ColorGame)
+
 ## Framework
 
 We will be using CreateJS as a framework to develop ColorGame. This is a suite of JavaScript libraries which allow us to draw, animate, play audio, and manage asset loading. Primarily we will use EaselJS to handle the drawing of graphics on the screen,
